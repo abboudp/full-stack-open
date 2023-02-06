@@ -28,9 +28,28 @@ const Button = ({ text, onClick }) => (
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-  const incrementCounter = () => setCounter(counter + 1)
-  const decrementCounter = () => setCounter(counter - 1)
-  const zeroCounter = () => setCounter(0)
+  const [ clicks, setClicks ] = useState({
+    left: 0, 
+    right: 0
+  })
+
+  const handleLeftClick = () => {
+    const newClicks = {
+      ...clicks,
+      left: clicks.left + 1
+    }
+    setClicks(newClicks)
+  }
+
+  const handleRightClick = () => {
+    const newClicks = {
+      ...clicks,
+       right: clicks.right + 1
+    }
+    setClicks(newClicks)
+  }
+
+  const setToValue = (newValue) => () => setCounter(newValue)
 
   const name = 'Peter'
   const age = 10
@@ -41,15 +60,28 @@ const App = () => {
       <Display counter={counter} />
       <Button 
         text='Plus' 
-        onClick={incrementCounter} 
+        onClick={setToValue(counter + 1)} 
       />
       <Button 
         text='Minus' 
-        onClick={decrementCounter} 
+        onClick={setToValue(counter - 1)} 
       />
       <Button 
         text='Zero' 
-        onClick={zeroCounter} 
+        onClick={setToValue(0)} 
+      />
+      <Button 
+        text='Thousand' 
+        onClick={setToValue(1000)} 
+      />
+      <h2>{clicks.left} {clicks.right}</h2>
+      <Button 
+        text='Left' 
+        onClick={handleLeftClick} 
+      />
+      <Button 
+        text='Right' 
+        onClick={handleRightClick} 
       />
       <Hello name="Maya" age={26 + 10} />
       <Hello name={name} age={age} />
